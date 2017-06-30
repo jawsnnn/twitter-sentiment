@@ -1,9 +1,9 @@
 import re
 import sys
 import string
+import json
 
-tweet = sys.argv[1]
-
+rawfile = sys.argv[1]
 
 def pre_process_tweets(tweet):
 	# Turn tweets to lower case
@@ -19,7 +19,8 @@ def pre_process_tweets(tweet):
 	tweet = re.sub(r"\#(\w+)", r" \1", tweet)
 
 	# Remove punctuation marks
-	tweet = tweet.translate(None, string.punctuation)
+	tweet = string.translate(tweet, None, string.punctuation)
+	#tweet = tweet.translate({ord(c):None for c in string.punctuation})
 	
 	# Eliminate extra or repeated spaces
 	tweet = re.sub(r"\s+", " ", tweet)
@@ -29,7 +30,20 @@ def pre_process_tweets(tweet):
 	
 	# Ignore words that are less than 3 letters in length
 	tweet = [w for w in tweet.split() if len(w) >= 3]
-
-	print tweet
-
-pre_process_tweets(tweet)
+	return tweet
+counter = 0
+with open(rawfile, 'rb') as fr:
+	for line in fr:
+		#print "PREPROCESSED: "+re.sub(r'[\r\n]', '', line)
+		if re.sub(r'[\r\n]', '', line):
+			try:
+				data = json.loads(re.sub(r'[\r\n]', '', line))
+				counter+= 1
+				if data['lang'] == 'en':
+					print pre_process_tweets(data['text'].encode('utf-8'))
+			except KeyError as ke:
+				print "Ignoring non-english lines"
+				continue
+			except Exception as e:
+				print line
+				raise e

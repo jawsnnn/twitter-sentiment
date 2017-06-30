@@ -28,4 +28,4 @@ if __name__ == '__main__':
 	stream = Stream(auth, list)
 
 	# Implement filter
-	stream.filter(track=['taltz', 'psoriasis', 'cosentyx', 'humira', 'enbrel'])
+	stream.filter(track=['taltz','cosentyx','psoriasis','humira','enbrel'])
