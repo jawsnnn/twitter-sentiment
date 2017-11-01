@@ -40,10 +40,10 @@ with open(rawfile, 'rb') as fr:
 				data = json.loads(re.sub(r'[\r\n]', '', line))
 				counter+= 1
 				if data['lang'] == 'en':
-					print pre_process_tweets(data['text'].encode('utf-8'))
+					print(pre_process_tweets(data['text'].encode('utf-8')))
 			except KeyError as ke:
-				print "Ignoring non-english lines"
+				print("Ignoring non-english lines")
 				continue
 			except Exception as e:
-				print line
+				print(line)
 				raise e

@@ -13,11 +13,11 @@ consumer_secret = "eziOMw5eCwcAUyFihFJN4SJiqcKOYvSmeIG5aqXMl9qXSuArBF"
 class StdOutListener (StreamListener):
 	
 	def on_data(self, data):
-		print data
+		print(data)
 		return True
 	
 	def on_error(self, status):
-		print status
+		printr(status)
 
 if __name__ == '__main__':
 	
@@ -28,4 +28,4 @@ if __name__ == '__main__':
 	stream = Stream(auth, list)
 
 	# Implement filter
-	stream.filter(track=['taltz','cosentyx','psoriasis','humira','enbrel'])
+	stream.filter(track=['#metoo'])
